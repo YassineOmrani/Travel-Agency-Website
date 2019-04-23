@@ -35,7 +35,7 @@
                             validate_user_reservation();
                         ?>
                     </div>
-                    <form action="reservationPart2.php" method="POST">
+                    <form action="" method="POST">
                         <label for="">Num Cin:</label>
                         <input type="text" name="numCin" class="form-control" placeholder="example: 12345678">
                         <label for="">Date Départ:</label>
@@ -49,7 +49,18 @@
                             <option value="3">Trois Personnes</option>
                             <option value="4">Quatre Personnes</option>
                         </select>
+                        <div id="personData"></div>
                         <br>
+                        <!-- <div class="form-group">
+                            <h1>Info Personne Num° 1</h1>
+                            <br>
+                            <input type="text" name="nomP1" placeholder="Nom personne Num° 1" class="form-control">
+                            <br>
+                            <input type="text" name="prenomP1" placeholder="Prénom personne Num° 1" class="form-control">
+                            <br>
+                            <input type="text" name="ageP1" placeholder="Age personne Num° 1" class="form-control">
+                            <br>
+                        </div>  -->
                         <div class="text-center">
                             <input type="submit" value="Réservé la circuit" class="btn btn-primary">
                         </div>
@@ -60,10 +71,11 @@
         </div>
         </div>
 
-    <!-- <script src="js/nbrPersonne.js"></script> -->
+     <!-- <script src="js/nbrPersonne.js"></script> -->
 
 
-                        <!-- <div class="form-group">
+                        <!-- 
+                        <div class="form-group">
                             <h1>Info Personne Num° 1</h1>
                             <br>
                             <input type="text" name="nomP1" placeholder="Nom personne Num° 1" class="form-control">
@@ -72,4 +84,5 @@
                             <br>
                             <input type="text" name="ageP1" placeholder="Age personne Num° 1" class="form-control">
                             <br>
-                        </div> -->
+                        </div> 
+                        -->

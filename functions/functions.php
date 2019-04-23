@@ -24,7 +24,7 @@ function display_message(){
 
 function validation_errors($error_message){
     $error_message = '
-    <div class="alert alert-danger alert-danger" role="alert" style="margin-top:15px; margin-bottom: 0px;">
+    <div class="alert alert-danger alert-danger" role="alert" style="margin-top:0px; margin-bottom: 0px;">
          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
          <strong>Warning!</strong> '.$error_message.'
     </div>';
@@ -72,9 +72,7 @@ function validate_user_registration(){
                 echo validation_errors($error);
             }
         }else if ( register_user($numCin, $nom, $prenom, $password, $adresse, $numTel, $sexe)){
-            $location = 'login.php';
-            redirect($location);
-
+            set_message("<p class='bg-success text-center' >welcome $name we are happy you joined us </p>");
         }
     }
 }
@@ -107,7 +105,7 @@ function validate_user_login(){
         $numCin   = clean($_POST['numCin']);
         $password = clean($_POST['password']);
         if (empty($numCin)){
-            $errors[] = "numCin field can't be empty"; 
+            $errors[] = "Num° Cin field can't be empty"; 
         }
         if (empty($password)){
             $errors[] = "Password filed can't be empty"; 
@@ -159,10 +157,8 @@ function validate_user_reservation(){
     $max = 8;
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        $numCin         = $_POST['numCin'];
-        /*
-           Requette bech ne5dhou beha el id mtaa el client
-        */
+        $numCin  = $_POST['numCin'];
+
         $sql = "
             SELECT idClient
             FROM client
@@ -171,91 +167,116 @@ function validate_user_reservation(){
         $result = query($sql);
         confirm($result);
         $row = fetch_data($result);
-        
-        
-
-        /* 
-            Niheyet el fawdha fel php XDD
-        */
-
 
         $idClient       = $row['idClient'];
         $idCircuit      = $_SESSION['idCircuit'];
         $dateDepart     = $_POST['dateDepart'];
-        $dateDepart=date("Y-m-d h:i:s",strtotime($dateDepart));
+        $dateDepart     = date("Y-m-d h:i:s",strtotime($dateDepart));
         $heureDepart    = $_POST['heureDepart'];
         $nbrPersonne    = $_POST['nbrPersonne'];
         
+
         if (empty($dateDepart)){
             $errors[] = "Date de Depart can't be empty"; 
         }
         if (empty($heureDepart)){
             $errors[] = "Heure de Depart can't be empty";
         }
-        if (empty($nomP1)){
-            $errors[] = "Nom Personne Num°1 can't be empty";
-        }else if (strlen($nomP1) < $min){
-            $errors[] = "Prenom Personne Num°1 length can't be less then ".$min." characters.";
+        if (empty($numCin)){
+            $errors[] = "Num° Cin  can't be empty";
         }
-        if (empty($ageP1)){
-            $errors[] = "Password can't be empty";
-        }
+
         //  Checking if there's errors             
         if (!empty($errors)){
             foreach($errors as $error){
                 //  Display errors
                 echo validation_errors($error);
             }
-        }else if ( reserve_circuit($idClient, $idCircuit, $dateDepart, $heureDepart, $nbrPersonne)){
-            redirect("logindex.php");
+        }else{
+            $sql1   = "INSERT INTO reservation(idClient, idCircuit, dateDepart, heureDepart, nbrPersonne) VALUES('$idClient','$idCircuit','$dateDepart','$heureDepart','$nbrPersonne') ";
+            $result1 = query($sql1);
+            confirm($result1);
+            redirect('reservationPart2.php?nbrPersonne='.$nbrPersonne.'&idClient='.$idClient.'&&idCircuit='.$idCircuit);
+
         }
     }
 }
 
 function reserve_circuit($idClient, $idCircuit, $dateDepart, $heureDepart, $nbrPersonne){
 
-            $sql1   = "INSERT INTO reservation(idClient, idCircuit, dateDepart, heureDepart, nbrPersonne) VALUES('$idClient','$idCircuit','$dateDepart','$heureDepart','$nbrPersonne') ";
-            $result1 = query($sql1);
+            $sql   = "INSERT INTO reservation(idClient, idCircuit, dateDepart, heureDepart, nbrPersonne) VALUES('$idClient','$idCircuit','$dateDepart','$heureDepart','$nbrPersonne') ";
+            $result = query($sql);
 
-            if (confirm($result1))
+            if (confirm($result))
             {
                 return true;
             }
 }
 
-function validate_person_info(){
-        
-    $errors = [];
-    $min = 3;
-    $max = 8;
-    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+function insertPerData($idClient, $nomP, $prenomP, $ageP){
+    $sql = "INSERT INTO personneavecclient(idClient, nomP, prenomP, ageP) VALUES ('$idClient', '$nomP', '$prenomP', '$ageP')";
+    $result = query($sql);
+    confirm($result);
+}
 
-        
-        if (empty($dateDepart)){
-            $errors[] = "Date de Depart can't be empty"; 
+function validate_persons_info($nbrPersonne, $idClient){
+    $errors = [];
+    $np = "nomP";
+    $pp = "prenomP";
+    $ap = "ageP";
+    $id = $idClient;
+    $i = 0;
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cc'])){
+        for ($i = 0  ; $i < $nbrPersonne ; $i++){
+
+            $a = $np.$i;
+            $b = $pp.$i;
+            $c = $ap.$i;
+
+            $$a = $_POST[$a];
+            $$b = $_POST[$b];
+            $$c = $_POST[$c];
+
+            if (empty($$a)){
+                $errors[] = 'nomP'.$i.' field cant be empty'; 
+            }
+            if (empty($$b)){
+                $errors[] = 'prenomP'.$i.' filed cant be empty'; 
+            }
+            if (empty($$c)){
+                $errors[] = 'ageP'.$i.' filed cant be empty'; 
+            }
+
+            $a = "";
+            $b = "";
+            $c = "";
         }
-        if (empty($heureDepart)){
-            $errors[] = "Heure de Depart can't be empty";
-        }
-        if (empty($nomP1)){
-            $errors[] = "Nom Personne Num°1 can't be empty";
-        }else if (strlen($nomP1) < $min){
-            $errors[] = "Prenom Personne Num°1 length can't be less then ".$min." characters.";
-        }
-        if (empty($ageP1)){
-            $errors[] = "Password can't be empty";
-        }
-        //  Checking if there's errors             
         if (!empty($errors)){
             foreach($errors as $error){
                 //  Display errors
                 echo validation_errors($error);
             }
-        }else if ( reserve_circuit($idClient, $idCircuit, $dateDepart, $heureDepart, $nbrPersonne)){
-            redirect("logindex.php");
-        }
+            }else{
+                for ($i = 0 ; $i < $nbrPersonne ; $i++ ){
+                $a = $np.$i;
+                $b = $pp.$i;
+                $c = $ap.$i;
+                
+                $aa = $$a;
+                $bb = $$b;
+                $cc = $$c;
+
+                $sql = "INSERT INTO personneavecclient(idClient, nomP, prenomP, ageP) VALUES ('$id', '$aa', '$bb', '$cc')";
+                $result = query($sql);
+                confirm ($result);
+                
+                $a = "";
+                $b = "";
+                $c = "";
+
+                }
+            }
     }
 }
-
 
 ?>

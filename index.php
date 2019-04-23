@@ -204,7 +204,7 @@
         <div class="txt3 clearfix">
           <div class="left_side">
           </div>
-          <div class="right_side"><a href=<?php echo "reserve.php?idCircuit=".$row["idCircuit"]; ?> class="btn-default btn1">Reservée</a></div>
+          <div class="right_side"><a href=<?php echo "reserve.php?idc=".$row["idCircuit"]; ?> class="btn-default btn1">Reservée</a></div>
         </div>
       </div>
     </div>
