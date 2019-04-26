@@ -134,7 +134,7 @@ function login_user($numCin,$password){
         $db_password = $row['password'];
         if (md5($password) === $db_password){
             $_SESSION['numCin'] = $numCin;
-            $_SESSION['fullname'] = "{$row['name']} {$row['prenom']}";
+            $_SESSION['fullname'] = "{$row['nom']} {$row['prenom']}";
             return true;
         }else{
             return false;
@@ -275,6 +275,7 @@ function validate_persons_info($nbrPersonne, $idClient){
                 $c = "";
 
                 }
+                redirect("logindex.php");
             }
     }
 }

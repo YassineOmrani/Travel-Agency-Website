@@ -1,0 +1,8 @@
+@media print {
+   table th  #d-print-none strong{
+        display: none;
+    }
+    table td  #d-print-none{
+        display: none;
+    }
+}

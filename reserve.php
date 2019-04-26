@@ -51,16 +51,6 @@
                         </select>
                         <div id="personData"></div>
                         <br>
-                        <!-- <div class="form-group">
-                            <h1>Info Personne Num° 1</h1>
-                            <br>
-                            <input type="text" name="nomP1" placeholder="Nom personne Num° 1" class="form-control">
-                            <br>
-                            <input type="text" name="prenomP1" placeholder="Prénom personne Num° 1" class="form-control">
-                            <br>
-                            <input type="text" name="ageP1" placeholder="Age personne Num° 1" class="form-control">
-                            <br>
-                        </div>  -->
                         <div class="text-center">
                             <input type="submit" value="Réservé la circuit" class="btn btn-primary">
                         </div>

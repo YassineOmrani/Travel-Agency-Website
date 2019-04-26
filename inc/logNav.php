@@ -4,7 +4,7 @@
     <div class="top2 clearfix">
       <header>
         <div class="logo_wrapper">
-          <a href="index.php" class="logo">
+          <a href="logindex.php" class="logo">
             <img src="images/logo.png" alt="" class="img-responsive">
           </a>
         </div>
@@ -23,7 +23,7 @@
             <li><a href="#">Gallery</a></li>
             <li><a href="#">Contacts</a></li>
             <li><a href="logout.php">Logout</a></li>
-            <li><a href="#"><strong><?php echo "Hello ".$_SESSION['fullname'] ?></strong></a></li>
+            <li><a href="myReservations.php"><strong><?php echo "Hello ".$_SESSION['fullname'] ?></strong></a></li>
           </ul>
         </div>
       </div>
